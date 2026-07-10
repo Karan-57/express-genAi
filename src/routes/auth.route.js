@@ -1,5 +1,7 @@
 const {Router} = require('express')
 
+const authController = require('../controllers/auth.controller');
+
 const authRouter = Router();
 
 /**
@@ -7,6 +9,13 @@ const authRouter = Router();
  * @description register new user
  * @access Public
  */
-authRouter.post('register',);
+authRouter.post('/register',authController.registerUserController);
+
+/**
+ * @route POST api/auth/login
+ * @description login a user
+ * @access Public
+ */
+authRouter.post('/login',authController.loginUserController);
 
 module.exports = authRouter;
