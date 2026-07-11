@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const userModel = require('../models/user.model')
+const blacklistModel = require('../models/blacklist.model')
 
 
 /**
@@ -103,4 +104,46 @@ async function loginUserController(req,res){
     });
 }
 
-module.exports = {registerUserController, loginUserController}
+
+/**
+ * @name logoutUserController
+ * @description logout a user and then add token to blacklist
+ * @access Public
+ */
+async function logoutUserController(req,res){
+    const token = req.cookies.token;
+
+    if(!token){
+        return res.status(400).json({
+            message:"token not found"
+        });
+    }
+
+    await blacklistModel.create({token});
+
+    res.clearCookie("token");
+
+    res.status(200).json({
+        message:"user logged out"
+    });
+}
+
+/**
+ * @name getMeController
+ * @description to get current user info
+ * @access Public
+ */
+async function getMeController(req,res){
+    const user = await userModel.findById(req.user.id);
+
+    res.status(200).json({
+        message:"user details fetched sucessfully",
+        user:{
+            id:user._id,
+            email:user.email,
+            username: user.username
+        }
+    });
+}
+
+module.exports = {registerUserController, loginUserController, logoutUserController, getMeController}
