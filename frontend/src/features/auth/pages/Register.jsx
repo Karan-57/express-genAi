@@ -9,7 +9,7 @@ const Register = () => {
 
   const submitHandler = (e)=>{
     e.preventDefault();
-  }
+  };
 
   return (
     <main>

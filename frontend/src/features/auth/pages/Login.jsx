@@ -4,11 +4,11 @@ import { useNavigate,Link } from 'react-router';
 
 const Login = () => {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const submitHandler = (e)=>{
     e.preventDefault();
-  }
+  };
 
   return (
     <main>
