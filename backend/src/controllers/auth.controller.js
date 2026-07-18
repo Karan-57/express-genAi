@@ -48,6 +48,7 @@ async function registerUserController(req,res){
     res.status(201).json({
         message:"user registered successfully",
         user:{
+            id:user._id,
             username:user.username,
             email:user.email
         }
@@ -98,6 +99,7 @@ async function loginUserController(req,res){
     res.status(200).json({
         message:"user logged in",
         user:{
+            id:user._id,
             username:user.username,
             email:user.email
         }
