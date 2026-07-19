@@ -5,6 +5,7 @@ const cors = require('cors')
 const app = express();
 
 const authRouter = require('../src/routes/auth.route')
+const interviewRouter = require('./routes/interview.routes')
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -15,5 +16,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/auth',authRouter);
+app.use('/api/interview',interviewRouter);
 
 module.exports = app;

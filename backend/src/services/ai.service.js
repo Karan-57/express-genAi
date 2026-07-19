@@ -86,7 +86,7 @@ async function generateInterviewReport({ jobDescription, resume, selfDescription
     Evaluate objectively, match fields accurately, and fill out the response according to the requested data schema structure.`;
 
     const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
+        model: "gemini-3.1-flash-lite",
         contents: prompt,
         config:{
             responseMimeType: "application/json",
@@ -94,11 +94,8 @@ async function generateInterviewReport({ jobDescription, resume, selfDescription
         },
     });
 
-    const rawData = JSON.parse(response.text);
-    const validatedData = (rawData);
-
-    console.log(validatedData);
-    console.log(validatedData.preparationPlan[0].tasks);
+    const validatedData = JSON.parse(response.text);
+    return validatedData;
 }
 
 module.exports = generateInterviewReport;
