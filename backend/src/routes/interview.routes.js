@@ -8,10 +8,24 @@ const interviewRouter =  Router();
 
 
 /**
- * -@route /api/ianterview/generate-report
+ * -@route /api/interview/generate-report
  * @description generate a structured report on interview based on user resume, self description and job description
  * @access Private
  */
 interviewRouter.post('/generate-report', authMiddleware.authUser,upload.single("resume"),interviewController.interviewReportGenerationController);
+
+/**
+ * -@route /api/interview/get-report/:interviewId
+ * @description get a report based on interview id/report id
+ * @access Private
+ */
+interviewRouter.get('/get-report/:interviewId',authMiddleware.authUser,interviewController.getReportController);
+
+/**
+ * -@route /api/interview/get-all
+ * @description get all reports of a user
+ * @access Private
+ */
+interviewRouter.get('/get-all',authMiddleware.authUser,interviewController.getAllReportsController);
 
 module.exports = interviewRouter;

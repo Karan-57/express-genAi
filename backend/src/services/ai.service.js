@@ -9,6 +9,10 @@ const ai = new GoogleGenAI({
 const interviewReportJsonSchema = {
   type: "object",
   properties: {
+    title:{
+      type:"string",
+      description:"title of a job for which report is generated"
+    },
     matchScore: {
       type: "integer",
       description: "Overall resume-to-job match score as a percentage between 0 and 100."
@@ -69,7 +73,7 @@ const interviewReportJsonSchema = {
       }
     }
   },
-  required: ["matchScore", "technicalQuestions", "behavioralQuestions", "skillGaps", "preparationPlan"]
+  required: ["title","matchScore", "technicalQuestions", "behavioralQuestions", "skillGaps", "preparationPlan"]
 };
 
 const interviewReportSchema = z.fromJSONSchema(interviewReportJsonSchema);
