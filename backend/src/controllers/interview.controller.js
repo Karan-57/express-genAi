@@ -62,4 +62,4 @@ async function getAllReportsController(req, res){
     });
 }
 
-module.exports = {interviewReportGenerationController, };
+module.exports = {interviewReportGenerationController, getReportController, getAllReportsController};
