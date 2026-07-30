@@ -24,8 +24,8 @@ async function interviewReportGenerationController(req,res){
     });
 
     res.status(201).json({
-        message:"report crated",
-        interviewReportResponse
+        message:"report created",
+        interviewReport
     });
 } 
 
