@@ -1,6 +1,30 @@
 import '../styles/home.style.scss'
+import {useInterview} from '../hooks/useInterview'
+import { useState,useRef } from 'react';
+import {useNavigate} from 'react-router'
 
 const Home = () => {
+  const {loading, generationReport} = useInterview();
+  const [jobDescription, setJobDescription] = useState("");
+  const [selfDescription, setselfDescription] = useState("");
+  const resumeInputRef = useRef();
+  const navigate = useNavigate();
+
+  const handleReportGeneration = async()=>{
+    const resumeFile = resumeInputRef.current.files[0];
+    const report = await generationReport({resumeFile, selfDescription, jobDescription});
+    console.log(report)
+    navigate(`/interview/${report._id}`)
+  }
+
+  if(loading){
+    return(
+      <main>
+        <h1>loading</h1>
+      </main>
+    )
+  }
+
   return (
     <main>
       <div className="interview-container">
@@ -16,6 +40,9 @@ const Home = () => {
             <div className="input-group">
               <label htmlFor="jobDescription">Job Description</label>
               <textarea
+                onChange={(e)=>{
+                  setJobDescription(e.target.value);
+                }}
                 id="jobDescription"
                 placeholder="Paste the complete job description..."
               />
@@ -28,7 +55,7 @@ const Home = () => {
                     <i className="ri-file-fill"></i>
                     <span>Resume (PDF)</span>
                 </label>
-                <input hidden type="file" id="resume" accept=".pdf" />
+                <input ref={resumeInputRef} hidden type="file" id="resume" accept=".pdf" />
             </div>
 
             <div className="input-group">
@@ -36,6 +63,9 @@ const Home = () => {
                 Self Description (Optional)
               </label>
               <textarea
+                onChange={(e)=>{
+                  setselfDescription(e.target.value);
+                }}
                 id="selfDescription"
                 placeholder="Tell us about yourself, projects, skills..."
               />
@@ -43,8 +73,12 @@ const Home = () => {
           </div>
         </div>
 
-        <button className="button primary-button">
-          Generate Interview Report
+        <button 
+          onClick={()=>{
+            handleReportGeneration();
+          }}
+          className="button primary-button">
+            Generate Interview Report
         </button>
       </div>
     </main>

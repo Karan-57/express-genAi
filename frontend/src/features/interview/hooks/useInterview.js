@@ -10,10 +10,11 @@ export const useInterview = ()=>{
     }
     const [report, setReport, loading, setLoading, reports, setReports] = context;
 
-    const generateReport = async({resume, selfDescription, jobDescription})=>{
+    const generationReport= async({resume, selfDescription, jobDescription})=>{
         setLoading(true);
+        let response = "";
         try{
-            const response = await interviewReportGeneration({resume, selfDescription, jobDescription});
+            response = await interviewReportGeneration({resume, selfDescription, jobDescription});
             setReport(response.interviewReport);
             
         }catch(err){
@@ -21,31 +22,36 @@ export const useInterview = ()=>{
         }finally{
             setLoading(false);
         }
+        return response.interviewReport;
     }
 
-    const getReport = async(interviewId)=>{
+    const gettingReport = async(interviewId)=>{
         setLoading(true);
+        let response = "";
         try{
-            const response = await getReport(interviewId);
+            response = await getReport(interviewId);
             setReport(response.interviewReport);
         }catch(err){
             console.log(err);
         }finally{
             setLoading(false);
         }
+        return response;
     }
 
-    const getAllReports = async()=>{
+    const getingAllReports = async()=>{
         setLoading(true);
+        let response;
         try{
-            const response = await getAllReports();
+            response = await getAllReports();
             setReports(response.interviewReports);
         }catch(err){
             console.log(err);
         }finally{
             setLoading(false);
         }
+        return response;
     }
 
-    return {report, reports, loading, generateReport, getReport, getAllReports}
+    return {report, reports, loading, generationReport, gettingReport, getingAllReports}
 }

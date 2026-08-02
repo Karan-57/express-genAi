@@ -1,6 +1,6 @@
 @use '../../../style.scss';
 
-main {
+main { 
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -89,6 +89,7 @@ h1 {
         font-size: 1rem;
         outline: none;
         transition: .2s;
+        color: white;
         background-color: #231f2b;
 
         &:focus {
