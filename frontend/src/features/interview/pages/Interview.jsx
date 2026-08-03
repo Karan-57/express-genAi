@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../styles/Interview.scss";
+import {InterviewContext} from '../interview.context'
 
 const Interview = () => {
   const [activeTab, setActiveTab] = useState("technical");
+  const context = useContext(InterviewContext);
+  const [report] = context;
 
   return (
     <main className="interview-page">
@@ -41,42 +44,27 @@ const Interview = () => {
             <>
               <h1>Technical Questions</h1>
 
-              <div className="question-card">
-                <h3>Explain the Event Loop in Node.js.</h3>
+              {
+                report.technicalQuestions.map((technicalQuestion)=>{
+                  <div className="question-card">
+                    <h3>{technicalQuestion.question}</h3>
 
-                <div className="intent">
-                  <strong>Intent</strong>
-                  <p>
-                    Evaluates understanding of asynchronous JavaScript and
-                    Node.js runtime.
-                  </p>
-                </div>
+                    <div className="intent">
+                      <strong>Intent</strong>
+                      <p>
+                        {technicalQuestion.intent}
+                      </p>
+                    </div>
 
-                <div className="answer">
-                  <strong>Ideal Answer</strong>
-                  <p>
-                    The Event Loop allows Node.js to perform non-blocking I/O by
-                    processing callbacks through different phases...
-                  </p>
-                </div>
-              </div>
-
-              <div className="question-card">
-                <h3>Difference between Authentication and Authorization?</h3>
-
-                <div className="intent">
-                  <strong>Intent</strong>
-                  <p>Tests backend security fundamentals.</p>
-                </div>
-
-                <div className="answer">
-                  <strong>Ideal Answer</strong>
-                  <p>
-                    Authentication verifies identity while Authorization
-                    determines permissions after authentication.
-                  </p>
-                </div>
-              </div>
+                    <div className="answer">
+                      <strong>Ideal Answer</strong>
+                      <p>
+                        {technicalQuestion.answer}
+                      </p>
+                    </div>
+                  </div>
+                })
+              }
             </>
           )}
 
@@ -190,21 +178,27 @@ const Interview = () => {
             <div className="progress">
               <div
                 className="progress-fill"
-                style={{ width: "78%" }}
+                style={{ width: `${report.matchScore}%` }}
               ></div>
             </div>
 
-            <span>78 / 100</span>
+            <span>{report.matchScore} / 100</span>
           </div>
 
           <div className="skill-gap-card">
             <h3>Skill Gaps</h3>
 
+            
+
             <div className="chips">
-              <span className="high">Docker</span>
-              <span className="medium">Redis</span>
-              <span className="medium">AWS</span>
-              <span className="low">CI/CD</span>
+              {
+              report.skillGaps.map((skill)=>{
+                return(
+                  <span className="high">{skill.skill}</span>
+
+                );
+              })
+            }
             </div>
           </div>
 

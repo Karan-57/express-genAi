@@ -10,7 +10,7 @@ export const useInterview = ()=>{
     }
     const [report, setReport, loading, setLoading, reports, setReports] = context;
 
-    const generationReport= async({resume, selfDescription, jobDescription})=>{
+    const generatingReport= async(resume, selfDescription, jobDescription)=>{
         setLoading(true);
         let response = "";
         try{
@@ -53,5 +53,5 @@ export const useInterview = ()=>{
         return response;
     }
 
-    return {report, reports, loading, generationReport, gettingReport, getingAllReports}
+    return {report, reports, loading, generatingReport, gettingReport, getingAllReports}
 }

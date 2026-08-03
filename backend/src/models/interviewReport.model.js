@@ -90,7 +90,7 @@ const interviewReportSchema = new mongoose.Schema({
         max:100
     },
     technicalQuestions:[technicalQuestionSchema],
-    behaviouralQuestions:[behavioralQuestionSchema],
+    behavioralQuestions:[behavioralQuestionSchema],
     skillGaps:[skillGapSchema],
     preparationPlan:[preparationPlanSchema]
 },{

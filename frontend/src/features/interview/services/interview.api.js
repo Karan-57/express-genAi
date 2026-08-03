@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-const api = axios({
+const api = axios.create({
     baseURL:"http://localhost:3000/api/interview",
     withCredentials:true
 });
 
 export const interviewReportGeneration = async ({resume,selfDescription, jobDescription})=>{
-    const formData = new formData();
+    const formData = new FormData();
     formData.append('resume',resume);
     formData.append('jobDescription',jobDescription);
     formData.append('selfDescription',selfDescription);

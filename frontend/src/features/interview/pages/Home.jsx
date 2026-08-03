@@ -4,7 +4,7 @@ import { useState,useRef } from 'react';
 import {useNavigate} from 'react-router'
 
 const Home = () => {
-  const {loading, generationReport} = useInterview();
+  const {loading, generatingReport} = useInterview();
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setselfDescription] = useState("");
   const resumeInputRef = useRef();
@@ -12,8 +12,7 @@ const Home = () => {
 
   const handleReportGeneration = async()=>{
     const resumeFile = resumeInputRef.current.files[0];
-    const report = await generationReport({resumeFile, selfDescription, jobDescription});
-    console.log(report)
+    const report = await generatingReport(resumeFile, selfDescription, jobDescription);
     navigate(`/interview/${report._id}`)
   }
 

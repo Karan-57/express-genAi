@@ -11,9 +11,7 @@ async function interviewReportGenerationController(req,res){
     const resumeContent = (await parser.getText()).text;
     const {selfDescription, jobDescription} = req.body;
 
-    console.log(selfDescription, jobDescription)
-
-    const interviewReportResponse = await generateInterviewReport(jobDescription, resumeContent, selfDescription);
+    const interviewReportResponse = await generateInterviewReport({jobDescription, resumeContent, selfDescription});
 
     const interviewReport = await interviewReportModel.create({
         user:req.user.id,

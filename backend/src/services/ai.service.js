@@ -14,8 +14,10 @@ const interviewReportJsonSchema = {
       description:"title of a job for which report is generated"
     },
     matchScore: {
-      type: "integer",
-      description: "Overall resume-to-job match score as a percentage between 0 and 100."
+        type: "integer",
+        minimum: 0,
+        maximum: 100,
+        description:"Resume match percentage between 0 and 100."
     },
     technicalQuestions: {
       type: "array",
@@ -79,15 +81,65 @@ const interviewReportJsonSchema = {
 const interviewReportSchema = z.fromJSONSchema(interviewReportJsonSchema);
 
 async function generateInterviewReport({ jobDescription, resume, selfDescription }) {
-    const prompt = `You are a Technical Recruiter and Senior Software Engineer.
-      Analyze how well the candidate matches the job description based strictly on the provided context data.
+    const prompt = `
+      You are an expert Technical Recruiter and Senior Software Engineer.
 
-      Context:
-      - Job Description: ${jobDescription}
-      - Resume: ${resume || "Not provided"}
-      - Self Description: ${selfDescription || "Not provided"}
+      Your task is to analyze the candidate against the provided job description and generate an interview report.
 
-    Evaluate objectively, match fields accurately, and fill out the response according to the requested data schema structure.`;
+      Context
+
+      Job Description:
+      ${jobDescription}
+
+      Resume:
+      ${resume || "Not provided"}
+
+      Self Description:
+      ${selfDescription || "Not provided"}
+
+      Instructions:
+
+      1. Calculate an accurate matchScore between 0 and 100.
+
+      2. Generate 8-10 technical interview questions.
+        - Questions must be directly related to the job description.
+        - intent should explain what skill is being evaluated.
+        - answer should be a concise ideal answer.
+
+      3. Generate 5-6 behavioral interview questions.
+        - Questions should evaluate communication, teamwork, ownership and problem solving.
+        - intent should explain what skill is being evaluated.
+        - answer should be a concise ideal answer.
+
+      4. Identify ONLY the missing skills.
+
+      IMPORTANT:
+      For skillGaps:
+      - skill must ONLY contain the skill name.
+      - Never write explanations.
+      - Never write sentences.
+      - Maximum 3 words.
+
+      Correct:
+      Docker
+      Redis
+      CI/CD
+      System Design
+      AWS
+      Kubernetes
+
+      Incorrect:
+      "The candidate should improve Docker knowledge."
+      "Needs more experience with Redis."
+
+      5. Create a preparation plan for 5 days.
+
+      Each day should contain:
+      - one focus topic
+      - 3-5 practical tasks
+
+      Return ONLY valid JSON matching the provided schema.
+    `;
 
     const response = await ai.models.generateContent({
         model: "gemini-3.1-flash-lite",
@@ -98,7 +150,8 @@ async function generateInterviewReport({ jobDescription, resume, selfDescription
         },
     });
 
-    const validatedData = JSON.parse(response.text);
+    const rawData = JSON.parse(response.text);
+    const validatedData = interviewReportSchema.parse(rawData);
     return validatedData;
 }
 
