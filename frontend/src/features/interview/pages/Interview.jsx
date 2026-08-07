@@ -1,32 +1,35 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import "../styles/Interview.scss";
-import {InterviewContext} from '../interview.context'
-import {useInterview} from '../hooks/useInterview.js'
+import { InterviewContext } from "../interview.context";
+import { useInterview } from "../hooks/useInterview.js";
 
 const Interview = () => {
   const [activeTab, setActiveTab] = useState("technical");
+  const [expandedDay, setExpandedDay] = useState(null);
+
   const context = useContext(InterviewContext);
-  const {report, loading} = context;
-  const {interviewId} = useParams();
-  const {gettingReport} = useInterview();
+  const { report, loading } = context;
 
-  useEffect(()=>{
-    if(interviewId){
-      gettingReport(interviewId)
+  const { interviewId } = useParams();
+  const { gettingReport } = useInterview();
+
+  useEffect(() => {
+    if (interviewId) {
+      gettingReport(interviewId);
     }
-  },[interviewId])
+  }, [interviewId]);
 
-  if(loading || !report){
-    return(
+  if (loading || !report) {
+    return (
       <main>
-        <h1>loading...</h1>
+        <p>loading...</p>
       </main>
-    )
+    );
   }
 
   return (
-    <main className="interview-page">
+    <main>
       <div className="interview-report">
 
         <aside className="sidebar">
@@ -61,30 +64,24 @@ const Interview = () => {
           {activeTab === "technical" && (
             <>
               <h1>Technical Questions</h1>
-              {console.log(report)}
-              {
-                report.technicalQuestions.map((technicalQuestion)=>{
-                  return(
-                    <div className="question-card">
+
+              {report.technicalQuestions.map((technicalQuestion, index) => {
+                return (
+                  <div className="question-card" key={index}>
                     <h3>{technicalQuestion.question}</h3>
 
                     <div className="intent">
                       <strong>Intent</strong>
-                      <p>
-                        {technicalQuestion.intent}
-                      </p>
+                      <p>{technicalQuestion.intent}</p>
                     </div>
 
                     <div className="answer">
                       <strong>Ideal Answer</strong>
-                      <p>
-                        {technicalQuestion.answer}
-                      </p>
+                      <p>{technicalQuestion.answer}</p>
                     </div>
                   </div>
-                  )
-                })
-              }
+                );
+              })}
             </>
           )}
 
@@ -92,44 +89,23 @@ const Interview = () => {
             <>
               <h1>Behavioral Questions</h1>
 
-              <div className="question-card">
-                <h3>Tell me about a difficult bug you solved.</h3>
+              {report.behavioralQuestions.map((behavioralQuestion, index) => {
+                return (
+                  <div className="question-card" key={index}>
+                    <h3>{behavioralQuestion.question}</h3>
 
-                <div className="intent">
-                  <strong>Intent</strong>
-                  <p>
-                    Evaluates problem solving, debugging ability and
-                    communication skills.
-                  </p>
-                </div>
+                    <div className="intent">
+                      <strong>Intent</strong>
+                      <p>{behavioralQuestion.intent}</p>
+                    </div>
 
-                <div className="answer">
-                  <strong>Ideal Answer</strong>
-                  <p>
-                    Use the STAR method. Explain the problem, your approach,
-                    tools used, outcome and what you learned.
-                  </p>
-                </div>
-              </div>
-
-              <div className="question-card">
-                <h3>Describe a disagreement you had with a teammate.</h3>
-
-                <div className="intent">
-                  <strong>Intent</strong>
-                  <p>
-                    Measures teamwork, communication and conflict resolution.
-                  </p>
-                </div>
-
-                <div className="answer">
-                  <strong>Ideal Answer</strong>
-                  <p>
-                    Focus on listening, collaborating and reaching a mutually
-                    beneficial solution.
-                  </p>
-                </div>
-              </div>
+                    <div className="answer">
+                      <strong>Ideal Answer</strong>
+                      <p>{behavioralQuestion.answer}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </>
           )}
 
@@ -139,50 +115,57 @@ const Interview = () => {
 
               <div className="roadmap">
 
-                <div className="roadmap-item">
-                  <div className="roadmap-marker"></div>
+                {report.preparationPlan.map((day) => {
+                  const isExpanded = expandedDay === day.day;
 
-                  <div className="question-card">
-                    <h3>Day 1</h3>
-                    <p>Revise JavaScript fundamentals, closures, promises and async/await.</p>
-                  </div>
-                </div>
+                  return (
+                    <div className="roadmap-item" key={day.day}>
 
-                <div className="roadmap-item">
-                  <div className="roadmap-marker"></div>
+                      <div className="roadmap-marker"></div>
 
-                  <div className="question-card">
-                    <h3>Day 2</h3>
-                    <p>Practice Express.js routing, middleware, authentication and JWT.</p>
-                  </div>
-                </div>
+                      <div className="question-card">
 
-                <div className="roadmap-item">
-                  <div className="roadmap-marker"></div>
+                        <div
+                          className="roadmap-header"
+                          onClick={() =>
+                            setExpandedDay(
+                              isExpanded ? null : day.day
+                            )
+                          }
+                        >
+                          <div>
+                            <h3>{`Day ${day.day}`}</h3>
+                            <p>{day.focus}</p>
+                          </div>
 
-                  <div className="question-card">
-                    <h3>Day 3</h3>
-                    <p>Revise MongoDB, aggregation pipeline, indexes and optimization.</p>
-                  </div>
-                </div>
+                          <span
+                            className={`roadmap-arrow ${
+                              isExpanded ? "open" : ""
+                            }`}
+                          >
+                            <i className="ri-arrow-down-s-line roadmap-arrow"></i>
+                          </span>
+                        </div>
 
-                <div className="roadmap-item">
-                  <div className="roadmap-marker"></div>
+                        {/* Always rendered so CSS can animate it */}
+                        <div
+                          className={`roadmap-tasks ${
+                            isExpanded ? "open" : ""
+                          }`}
+                        >
+                          {day.tasks.map((task, index) => (
+                            <div className="task" key={index}>
+                              <span>•</span>
+                              <p>{task}</p>
+                            </div>
+                          ))}
+                        </div>
 
-                  <div className="question-card">
-                    <h3>Day 4</h3>
-                    <p>Learn Docker basics, Redis caching and deployment concepts.</p>
-                  </div>
-                </div>
+                      </div>
 
-                <div className="roadmap-item">
-                  <div className="roadmap-marker"></div>
-
-                  <div className="question-card">
-                    <h3>Day 5</h3>
-                    <p>Give a mock interview and revise behavioral questions.</p>
-                  </div>
-                </div>
+                    </div>
+                  );
+                })}
 
               </div>
             </>
@@ -208,17 +191,14 @@ const Interview = () => {
           <div className="skill-gap-card">
             <h3>Skill Gaps</h3>
 
-            
-
             <div className="chips">
-              {
-              report.skillGaps.map((skill)=>{
-                return(
-                  <span className="high">{skill.skill}</span>
-
+              {report.skillGaps.map((skill, index) => {
+                return (
+                  <span className="high" key={index}>
+                    {skill.skill}
+                  </span>
                 );
-              })
-            }
+              })}
             </div>
           </div>
 

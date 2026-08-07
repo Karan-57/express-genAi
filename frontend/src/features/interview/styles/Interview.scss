@@ -27,7 +27,7 @@ main {
 }
 
 /* ===========================
-    Sidebar
+   Sidebar
 =========================== */
 
 .sidebar {
@@ -70,22 +70,23 @@ main {
 }
 
 /* ===========================
-    Content
+   Content
 =========================== */
 
 .content {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    overflow-y:auto;
+    overflow-y: auto;
 
     h1 {
         color: white;
         text-align: left;
     }
 }
-.content::-webkit-scrollbar{
-    display:none;
+
+.content::-webkit-scrollbar {
+    display: none;
 }
 
 .question-card {
@@ -114,7 +115,7 @@ main {
 }
 
 /* ===========================
-    Summary
+   Summary
 =========================== */
 
 .summary {
@@ -128,6 +129,7 @@ main {
     background: #231f2b;
     border-radius: .75rem;
     padding: 1.5rem;
+
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -159,7 +161,7 @@ main {
 }
 
 /* ===========================
-    Skill Gaps
+   Skill Gaps
 =========================== */
 
 .chips {
@@ -188,6 +190,10 @@ main {
     border-color: #22c55e;
 }
 
+/* ===========================
+   Roadmap
+=========================== */
+
 .roadmap {
     display: flex;
     flex-direction: column;
@@ -204,12 +210,14 @@ main {
     }
 }
 
+/* Timeline circle */
+
 .roadmap-marker {
     width: 18px;
     height: 18px;
     border: 3px solid rgb(230, 0, 69);
     border-radius: 50%;
-    background: #232026; // same as page background
+    background: #232026;
     flex-shrink: 0;
     margin-top: 1.2rem;
     position: relative;
@@ -231,12 +239,93 @@ main {
     }
 }
 
-.roadmap-item:last-child .roadmap-marker::after {
-    display: none;
+/* ===========================
+   Roadmap Accordion
+=========================== */
+
+.roadmap-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+
+    h3 {
+        margin: 0;
+        color: rgb(230, 0, 69);
+    }
+
+    p {
+        margin: .4rem 0 0;
+        color: #d5d5d5;
+        line-height: 1.6;
+    }
+}
+
+/* Arrow */
+
+.roadmap-arrow {
+    color: #8b8b8b;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    transition: transform .25s ease;
+}
+
+/* Tasks */
+
+.roadmap-tasks {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+
+    transition:
+        max-height .35s ease,
+        opacity .25s ease,
+        margin-top .35s ease;
+
+    &.open {
+        max-height: 500px;
+        opacity: 1;
+        margin-top: 1.2rem;
+    }
+}
+.roadmap-arrow {
+    color: #8b8b8b;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    transition: transform .35s ease;
+
+    &.open {
+        transform: rotate(180deg);
+    }
+}
+
+.task {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+
+    padding: .75rem 1rem;
+    background: #18161b;
+    border-radius: .5rem;
+
+    span {
+        color: rgb(230, 0, 69);
+        font-size: 1.1rem;
+        line-height: 1.7;
+        flex-shrink: 0;
+    }
+
+    p {
+        margin: 0;
+        color: #d5d5d5;
+        line-height: 1.6;
+    }
 }
 
 /* ===========================
-    Responsive
+   Responsive
 =========================== */
 
 @media (max-width: 1200px) {
@@ -252,6 +341,7 @@ main {
 @media (max-width: 850px) {
     .interview-report {
         grid-template-columns: 1fr;
+        height: auto;
     }
 
     .summary {
@@ -265,5 +355,9 @@ main {
         button {
             white-space: nowrap;
         }
+    }
+
+    .content {
+        max-height: 70vh;
     }
 }
