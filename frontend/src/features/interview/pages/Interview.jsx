@@ -1,11 +1,29 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router";
 import "../styles/Interview.scss";
 import {InterviewContext} from '../interview.context'
+import {useInterview} from '../hooks/useInterview.js'
 
 const Interview = () => {
   const [activeTab, setActiveTab] = useState("technical");
   const context = useContext(InterviewContext);
-  const [report] = context;
+  const {report, loading} = context;
+  const {interviewId} = useParams();
+  const {gettingReport} = useInterview();
+
+  useEffect(()=>{
+    if(interviewId){
+      gettingReport(interviewId)
+    }
+  },[interviewId])
+
+  if(loading || !report){
+    return(
+      <main>
+        <h1>loading...</h1>
+      </main>
+    )
+  }
 
   return (
     <main className="interview-page">
@@ -43,10 +61,11 @@ const Interview = () => {
           {activeTab === "technical" && (
             <>
               <h1>Technical Questions</h1>
-
+              {console.log(report)}
               {
                 report.technicalQuestions.map((technicalQuestion)=>{
-                  <div className="question-card">
+                  return(
+                    <div className="question-card">
                     <h3>{technicalQuestion.question}</h3>
 
                     <div className="intent">
@@ -63,6 +82,7 @@ const Interview = () => {
                       </p>
                     </div>
                   </div>
+                  )
                 })
               }
             </>

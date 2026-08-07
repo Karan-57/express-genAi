@@ -12,6 +12,7 @@ main {
 .interview-report {
     width: 100%;
     max-width: 1500px;
+    height: 85vh;
     display: grid;
     grid-template-columns: 240px 1fr 320px;
     gap: 2rem;
@@ -76,11 +77,15 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    overflow-y:auto;
 
     h1 {
         color: white;
         text-align: left;
     }
+}
+.content::-webkit-scrollbar{
+    display:none;
 }
 
 .question-card {
