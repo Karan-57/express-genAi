@@ -362,3 +362,48 @@ main {
         max-height: 70vh;
     }
 }
+
+
+.back-button,
+.logout-button {
+    position: fixed;
+    top: 1.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    border: none;
+    outline: none;
+    background: #232026;
+    color: #b5bac1;
+
+    padding: .7rem 1rem;
+    border-radius: .6rem;
+
+    cursor: pointer;
+    z-index: 100;
+
+    transition: .25s ease;
+
+    i {
+        font-size: 1.2rem;
+    }
+
+    &:hover {
+        background: #2d2932;
+        color: white;
+    }
+}
+
+.back-button {
+    left: 1.5rem;
+}
+
+.logout-button {
+    right: 1.5rem;
+
+    &:hover {
+        color: rgb(230, 0, 69);
+    }
+}

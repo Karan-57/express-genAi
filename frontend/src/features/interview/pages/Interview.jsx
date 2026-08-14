@@ -1,8 +1,9 @@
 import { useState, useContext, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import "../styles/Interview.scss";
 import { InterviewContext } from "../interview.context";
 import { useInterview } from "../hooks/useInterview.js";
+import {useAuth} from '../../auth/hooks/useAuth.js'
 
 const Interview = () => {
   const [activeTab, setActiveTab] = useState("technical");
@@ -14,11 +15,19 @@ const Interview = () => {
   const { interviewId } = useParams();
   const { gettingReport } = useInterview();
 
+  const navigate = useNavigate();
+  const {handleLogout} = useAuth();
+
   useEffect(() => {
     if (interviewId) {
       gettingReport(interviewId);
     }
   }, [interviewId]);
+
+  const logoutHandler = async()=>{
+    await handleLogout();
+    navigate("/login");
+  }
 
   if (loading || !report) {
     return (
@@ -30,6 +39,23 @@ const Interview = () => {
 
   return (
     <main>
+      <button
+      className="back-button"
+      onClick={() => navigate(-1)}
+    >
+      <i className="ri-arrow-left-line"></i>
+      <span>Back</span>
+    </button>
+
+    <button
+      className="logout-button"
+      onClick={() => {
+        logoutHandler();
+      }}
+    >
+      <i className="ri-logout-box-r-line"></i>
+      <span>Logout</span>
+    </button>
       <div className="interview-report">
 
         <aside className="sidebar">

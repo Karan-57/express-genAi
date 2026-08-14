@@ -2,6 +2,7 @@ import '../styles/home.style.scss'
 import { useInterview } from '../hooks/useInterview'
 import { useState, useRef , useEffect} from 'react';
 import { useNavigate } from 'react-router';
+import {useAuth} from '../../auth/hooks/useAuth'
 
 const Home = () => {
   const { loading, generatingReport } = useInterview();
@@ -10,6 +11,7 @@ const Home = () => {
   const [selfDescription, setselfDescription] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const {gettingAllReports, reports} = useInterview();
+  const {handleLogout} = useAuth();
 
   const resumeInputRef = useRef();
   const navigate = useNavigate();
@@ -30,6 +32,11 @@ const Home = () => {
     );
 
     navigate(`/interview/${report._id}`);
+  }
+
+  const logoutHandler = async()=>{
+    await handleLogout();
+    navigate("/login");
   }
 
   if (loading) {
@@ -53,8 +60,7 @@ const Home = () => {
       <button
         className="logout-button"
         onClick={() => {
-          // logout logic here
-          navigate("/login");
+          logoutHandler();
         }}
       >
   <i className="ri-logout-box-r-line"></i>
