@@ -39,7 +39,7 @@ export const useInterview = ()=>{
         return response;
     }
 
-    const getingAllReports = async()=>{
+    const gettingAllReports = async()=>{
         setLoading(true);
         let response;
         try{
@@ -53,5 +53,5 @@ export const useInterview = ()=>{
         return response;
     }
 
-    return {report, reports, loading, generatingReport, gettingReport, getingAllReports}
+    return {report, reports, loading, generatingReport, gettingReport, gettingAllReports}
 }

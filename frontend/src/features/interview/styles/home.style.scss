@@ -121,3 +121,228 @@ h1 {
         width: 100%;
     }
 }
+
+.menu-button {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: .6rem;
+
+    background: #232026;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 1001;
+
+    font-size: 1.5rem;
+
+    transition: .2s ease;
+
+    &:hover {
+        background: #2d2932;
+    }
+}
+
+
+/* =========================
+   Reports Sidebar
+========================= */
+
+.reports-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 320px;
+    height: 100vh;
+
+    background: #232026;
+
+    z-index: 1002;
+
+    padding: 1.5rem;
+
+    transform: translateX(-100%);
+
+    transition: transform .35s ease;
+
+    box-shadow: 10px 0 30px rgba(0, 0, 0, .25);
+
+    &.open {
+        transform: translateX(0);
+    }
+}
+
+
+/* Header */
+
+.reports-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 2rem;
+
+    h2 {
+        color: white;
+        margin: 0;
+    }
+}
+
+
+.close-button {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: .5rem;
+
+    background: transparent;
+    color: #b5bac1;
+
+    font-size: 1.4rem;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background: #2d2932;
+        color: white;
+    }
+}
+
+
+/* Reports */
+
+.reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+
+.report-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: .8rem;
+
+    padding: .9rem 1rem;
+
+    border: none;
+    border-radius: .6rem;
+
+    background: transparent;
+
+    color: #d5d5d5;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+
+    font-size: .95rem;
+
+    i {
+        font-size: 1.2rem;
+        color: #9ca3af;
+    }
+
+    span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &:hover {
+        background: #2d2932;
+        color: white;
+
+        i {
+            color: rgb(230, 0, 69);
+        }
+    }
+}
+
+
+/* =========================
+   Background Overlay
+========================= */
+
+.sidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .45);
+
+    z-index: 1000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .35s ease,
+        visibility .35s ease;
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.menu-button {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 1001;
+}
+
+.logout-button {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+
+    z-index: 1001;
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: .6rem;
+
+    background: #232026;
+    color: #b5bac1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 1.3rem;
+
+    transition: .25s ease;
+
+    &:hover {
+        background: rgb(230, 0, 69);
+        color: white;
+    }
+}
