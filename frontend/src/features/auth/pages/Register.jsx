@@ -18,8 +18,13 @@ const Register = () => {
 
   const submitHandler = async (e)=>{
     e.preventDefault();
+    setError("");
+    try{
     await handleRegister({email, username, password});
     navigate('/');
+    }catch(err){
+      setError(err.response?.data?.message || "register failed");
+    }
   };
 
   if(loading){
