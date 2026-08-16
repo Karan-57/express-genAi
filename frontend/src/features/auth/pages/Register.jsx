@@ -20,8 +20,8 @@ const Register = () => {
     e.preventDefault();
     setError("");
     try{
-    await handleRegister({email, username, password});
-    navigate('/');
+      await handleRegister({email, username, password});
+      navigate('/');
     }catch(err){
       setError(err.response?.data?.message || "register failed");
     }

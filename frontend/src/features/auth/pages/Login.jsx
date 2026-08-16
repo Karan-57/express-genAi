@@ -62,7 +62,7 @@ const Login = () => {
             <p style={{color: "#ef4444"}}>
                 {error}
             </p>
-        )}
+          )}
 
           <button className="button primary-button" >Login</button>
         </form>

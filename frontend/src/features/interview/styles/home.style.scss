@@ -102,6 +102,10 @@ h1 {
         min-height: 220px;
     }
 
+    textarea::-webkit-scrollbar{
+        display: none;
+    }
+
     input[type="file"] {
         padding: .75rem;
     }
