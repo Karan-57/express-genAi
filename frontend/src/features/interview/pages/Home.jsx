@@ -3,6 +3,7 @@ import { useInterview } from '../hooks/useInterview'
 import { useState, useRef , useEffect} from 'react';
 import { useNavigate } from 'react-router';
 import {useAuth} from '../../auth/hooks/useAuth'
+import Loading from '../../loading/Loading';
 
 const Home = () => {
   const { loading, generatingReport } = useInterview();
@@ -42,7 +43,7 @@ const Home = () => {
   if (loading) {
     return (
       <main>
-        <h1>loading</h1>
+        <Loading/>
       </main>
     )
   }
@@ -100,7 +101,7 @@ const Home = () => {
               <i className="ri-file-text-line"></i>
 
               <span>
-                {`report.title`} 
+                {report.title} 
               </span>
             </button>
           ))}

@@ -1,9 +1,10 @@
+import "../styles/Interview.scss";
 import { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import "../styles/Interview.scss";
 import { InterviewContext } from "../interview.context";
 import { useInterview } from "../hooks/useInterview.js";
-import {useAuth} from '../../auth/hooks/useAuth.js'
+import {useAuth} from '../../auth/hooks/useAuth.js';
+import Loading from '../../loading/Loading';
 
 const Interview = () => {
   const [activeTab, setActiveTab] = useState("technical");
@@ -13,7 +14,7 @@ const Interview = () => {
   const { report, loading } = context;
 
   const { interviewId } = useParams();
-  const { gettingReport } = useInterview();
+  const { gettingReport, generatingResume } = useInterview();
 
   const navigate = useNavigate();
   const {handleLogout} = useAuth();
@@ -32,7 +33,7 @@ const Interview = () => {
   if (loading || !report) {
     return (
       <main>
-        <p>loading...</p>
+        <Loading/>
       </main>
     );
   }
@@ -40,22 +41,22 @@ const Interview = () => {
   return (
     <main>
       <button
-      className="back-button"
-      onClick={() => navigate(-1)}
-    >
-      <i className="ri-arrow-left-line"></i>
-      <span>Back</span>
-    </button>
+        className="back-button"
+        onClick={() => navigate(-1)}
+      >
+        <i className="ri-arrow-left-line"></i>
+        <span>Back</span>
+      </button>
 
-    <button
-      className="logout-button"
-      onClick={() => {
-        logoutHandler();
-      }}
-    >
-      <i className="ri-logout-box-r-line"></i>
-      <span>Logout</span>
-    </button>
+      <button
+        className="logout-button"
+        onClick={() => {
+          logoutHandler();
+        }}
+      >
+        <i className="ri-logout-box-r-line"></i>
+      </button>
+
       <div className="interview-report">
 
         <aside className="sidebar">
@@ -227,6 +228,16 @@ const Interview = () => {
               })}
             </div>
           </div>
+
+          <button onClick={()=>{
+            generatingResume({interviewId});
+          }} className="button primary-button download-btn">
+            <i
+              className="ri-gemini-fill"
+              style={{ fontSize: "18px" }}
+            ></i>
+            <span>Download resume</span>
+          </button>
 
         </aside>
 

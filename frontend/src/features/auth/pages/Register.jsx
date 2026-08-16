@@ -1,8 +1,8 @@
 import '../auth.form.scss'
 
-import { useNavigate, Link } from 'react-router'
-
-import {useAuth} from '../hooks/useAuth'
+import { useNavigate, Link } from 'react-router';
+import Loading from '../../loading/Loading';
+import {useAuth} from '../hooks/useAuth';
 import { useState } from 'react';
 
 
@@ -12,6 +12,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const Register = () => {
   if(loading){
     return(
       <main>
-        <h1>Loading......</h1>
+        <Loading/>
       </main>
     )
   }
@@ -58,6 +59,12 @@ const Register = () => {
             }}
             type="password" id="password" name="password" placeholder="Enter password" />
           </div>
+
+          {error && (
+            <p style={{color: "#ef4444"}}>
+                {error}
+            </p>
+          )}
 
           <button className="button primary-button" >Register</button>
         </form>

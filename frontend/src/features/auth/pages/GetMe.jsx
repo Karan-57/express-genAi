@@ -1,7 +1,7 @@
 import '../../../styles/button.style.scss'
 
 import { useContext } from 'react';
-
+import Loading from '../../loading/Loading';
 import {useAuth} from '../hooks/useAuth'
 import {AuthContext} from '../auth.context'
 const GetMe = () => {
@@ -18,7 +18,7 @@ const GetMe = () => {
   if(loading){
     return (
         <main>
-            <h1>Loading.......</h1>
+            <Loading/>
         </main>
     )
   }

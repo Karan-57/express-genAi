@@ -404,6 +404,19 @@ main {
     right: 1.5rem;
 
     &:hover {
-        color: rgb(230, 0, 69);
+        background: rgb(230, 0, 69);
+        color: white;
+    }
+}
+
+.download-btn{
+    margin-top: 4rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
+
+    &:hover {
+        transform: scale(1.04);
     }
 }

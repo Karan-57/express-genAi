@@ -2,7 +2,8 @@ import '../auth.form.scss'
 
 import { useNavigate,Link } from 'react-router';
 import { useState } from 'react';
-import {useAuth} from '../hooks/useAuth'
+import {useAuth} from '../hooks/useAuth';
+import Loading from '../../loading/Loading';
 
 const Login = () => {
 
@@ -10,19 +11,27 @@ const Login = () => {
 
   const [email, setemail] = useState("second");
   const [password, setPassword]  = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const submitHandler = async (e)=>{
     e.preventDefault();
-    await handleLogin({email, password});
-    navigate('/');
+
+    setError("");
+
+    try{
+      await handleLogin({email, password});
+      navigate('/');
+    }catch(err){
+      setError(err.response?.data?.message || "Login failed");
+    }
   };
 
   if(loading){
     return(
       <main>
-        <h1>Loading..........</h1>
+        <Loading/>
       </main>
     )
   }
@@ -48,6 +57,12 @@ const Login = () => {
             }}
             type="password" id="password" name="password" placeholder="Enter password" />
           </div>
+
+          {error && (
+            <p style={{color: "#ef4444"}}>
+                {error}
+            </p>
+        )}
 
           <button className="button primary-button" >Login</button>
         </form>

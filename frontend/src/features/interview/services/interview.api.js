@@ -31,3 +31,11 @@ export const getAllReports = async ()=>{
 
     return response.data;
 }
+
+export const generateResumePdf = async({interviewId})=>{
+    const response = await api.get(`generate-resume/${interviewId}`,{
+        responseType:"blob"
+    });
+
+    return response.data;
+}

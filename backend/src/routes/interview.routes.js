@@ -28,4 +28,12 @@ interviewRouter.get('/get-report/:interviewId',authMiddleware.authUser,interview
  */
 interviewRouter.get('/get-all',authMiddleware.authUser,interviewController.getAllReportsController);
 
+
+/**
+ * -@route /api/interview/generate-resume/:interviewId
+ * @description generate a resume for a particular job description based on previous resume and self description
+ * @access Private
+ */
+interviewRouter.get('/generate-resume/:interviewId',authMiddleware.authUser,interviewController.generateResumeController);
+
 module.exports = interviewRouter;
