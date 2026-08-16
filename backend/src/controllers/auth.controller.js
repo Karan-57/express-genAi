@@ -29,7 +29,7 @@ async function registerUserController(req,res){
 
     if(userAlreadyExists){
         return res.status(400).json({
-            message:"user with email and password already exists"
+            message:"user with this email and password already exists"
         });
     }
 
@@ -89,7 +89,7 @@ async function loginUserController(req,res){
 
     const token = jwt.sign({
         id:user._id,
-        username:user._username
+        username:user.username
     },process.env.JWT_SECRET,{
         expiresIn:"1d"
     });
