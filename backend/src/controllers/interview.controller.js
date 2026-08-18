@@ -71,7 +71,7 @@ async function generateResumeController(req, res){
 
 
     if(!interviewReport){
-        res.status(404).json({
+        return res.status(404).json({
             message:"interview report with id not found"
         });
     }
