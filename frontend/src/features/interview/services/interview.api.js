@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL:"http://localhost:3000/api/interview",
+    baseURL:"https://express-genai.onrender.com",
     withCredentials:true
 });
 
@@ -11,7 +11,7 @@ export const interviewReportGeneration = async ({resume,selfDescription, jobDesc
     formData.append('jobDescription',jobDescription);
     formData.append('selfDescription',selfDescription);
 
-    const response = await api.post('/generate-report',formData,{
+    const response = await api.post('/api/interview/generate-report',formData,{
         headers:{
             "Content-Type":"multipart/form-data"
         }
@@ -21,19 +21,19 @@ export const interviewReportGeneration = async ({resume,selfDescription, jobDesc
 }
 
 export const getReport = async (interviewId)=>{
-    const response = await api.get(`/get-report/${interviewId}`);
+    const response = await api.get(`/api/interview/get-report/${interviewId}`);
 
     return response.data;
 }
 
 export const getAllReports = async ()=>{
-    const response = await api.get('get-all');
+    const response = await api.get('/api/interview/get-all');
 
     return response.data;
 }
 
 export const generateResumePdf = async({interviewId})=>{
-    const response = await api.get(`generate-resume/${interviewId}`,{
+    const response = await api.get(`/api/interview/generate-resume/${interviewId}`,{
         responseType:"blob"
     });
 
