@@ -161,8 +161,9 @@ async function convertToPdf(htmlContent) {
 
   const page = await browser.newPage();
 
-  await page.setContent(htmlContent, {
-    waitUntil: "networkidle0"
+  await page.setContent(html, {
+      waitUntil: "domcontentloaded",
+      timeout: 30000
   });
 
   const pdfBuffer = await page.pdf({
